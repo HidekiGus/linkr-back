@@ -1,3 +1,5 @@
+import { insertNewUser } from "../repositories/authRepository.js";
+
 export async function signUp(req, res) {
     try {
         const user = req.body;
