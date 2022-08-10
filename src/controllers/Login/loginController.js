@@ -42,6 +42,12 @@ export async function login(req, res) {
         }
         const token =uuid()
         console.log(token)
+        await db.query(`INSERT INTO sessions(user_id,token)
+        VALUES ($1, $2)
+        `,[Number(resultado.rows[0].id),token])
+       
+
+        
         res.status(200).send(token)
 
   } catch(e){
