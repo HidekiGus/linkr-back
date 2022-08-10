@@ -6,7 +6,7 @@ export async function login(req, res) {
     console.log(conta)
     const userSchema = joi.object({
       email: joi.string().email().required(),
-      senha: joi.string().required()
+      password: joi.string().required()
     });
    
     const validar = userSchema.validate(conta)
@@ -18,10 +18,10 @@ export async function login(req, res) {
     console.log('?')
     console.log(conta.email)
    
-    //const loginSchema = joi.object({
-        //email: joi.string().email().required(),
-       // password: joi.string().required()
-     // });
+    const loginSchema = joi.object({
+        email: joi.string().email().required(),
+        password: joi.string().required()
+      });
    
      
       
@@ -32,8 +32,8 @@ export async function login(req, res) {
           console.log('vc n')
           return res.status(401).send('voce nao existe')
         }
-        console.log(resultado.rows[0].email)
-        const senha= bcrypt.compareSync(conta.senha, resultado.rows[0].password)
+        console.log(resultado.rows[0].email) 
+        const senha= bcrypt.compareSync(conta.password, resultado.rows[0].password)
         if(!senha){
           console.log('senha invalida')
           return res.status(401).send('voce nao existe')
