@@ -12,33 +12,29 @@ export async function login(req, res) {
    
     const validar = userSchema.validate(conta)
       if(validar.error){
-        return res.status(422).send('deu ruim -_-');
+        return res.status(422).send(' email ou senha invalido');
       }
      
   try{
     console.log('?')
     console.log(conta.email)
    
-    const loginSchema = joi.object({
-        email: joi.string().email().required(),
-        password: joi.string().required()
-      });
    
      
       
      console.log('aqui')
         const resultado = await db.query(`SELECT * FROM users WHERE email =$1`,[conta.email])
         console.log('db')
-        console.log(resultado.rows[0].email)
+        console.log(resultado.rows.length)
         if(resultado.rows.length ==0){ 
           console.log('vc n')
-          return res.status(401).send('voce nao existe')
+          return res.status(401).send('email ou senha incorreto')
         }
         console.log(resultado.rows[0]) 
         const senha= bcrypt.compareSync(conta.password, resultado.rows[0].password)
         if(!senha){
           console.log('senha invalida')
-          return res.status(401).send('voce nao existe')
+          return res.status(401).send('email ou senha incorreto')
         }
         const token =uuid()
         console.log(token)
