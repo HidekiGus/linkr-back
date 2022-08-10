@@ -1,3 +1,4 @@
+import db from "./../../dbStrategy/pg.js"
 import bcrypt from "bcrypt";
 import { v4 as uuid } from 'uuid';
 import joi from "joi";
@@ -27,12 +28,13 @@ export async function login(req, res) {
       
      console.log('aqui')
         const resultado = await db.query(`SELECT * FROM users WHERE email =$1`,[conta.email])
+        console.log('db')
         console.log(resultado.rows[0].email)
         if(resultado.rows.length ==0){ 
           console.log('vc n')
           return res.status(401).send('voce nao existe')
         }
-        console.log(resultado.rows[0].email) 
+        console.log(resultado.rows[0]) 
         const senha= bcrypt.compareSync(conta.password, resultado.rows[0].password)
         if(!senha){
           console.log('senha invalida')
