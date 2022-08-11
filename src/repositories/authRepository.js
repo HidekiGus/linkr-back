@@ -10,3 +10,7 @@ export async function insertNewUser(user, encryptedPassword) {
 export async function findEmail(email) {
     return await connection.query('SELECT * FROM users WHERE email = $1', [email])
 }
+
+export async function findSession(token) {
+    return await connection.query('SELECT * FROM sessions WHERE token = $1', [token])
+}
