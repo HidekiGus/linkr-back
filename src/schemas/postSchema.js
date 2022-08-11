@@ -9,7 +9,7 @@ const urlPattern = new RegExp('^(https?:\\/\\/)?'+ // validate protocol
     );
 
 const postSchema = joi.object({
-    "user_id": joi.number().integer().required(),  
+    "userId": joi.number().integer().required(),  
     "link": joi.string().pattern(urlPattern).required(),
     "description": joi.string().allow('').required()
 });
