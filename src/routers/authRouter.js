@@ -10,4 +10,5 @@ const authRouter = Router();
 authRouter.post('/signup', validateSchema(newUserSchema), signUp);
 authRouter.post('/signin',login)
 authRouter.get('/timeline', pesquisa)
+
 export default authRouter;
