@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import { v4 as uuid } from 'uuid';
 import joi from "joi";
 export async function login(req, res) {
-    const conta = req.body;
+    const conta = req.body.nome;
     console.log(conta)
     const userSchema = joi.object({
       email: joi.string().email().required(),
