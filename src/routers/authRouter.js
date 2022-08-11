@@ -7,5 +7,6 @@ import newUserSchema from "../schemas/newUserSchema.js";
 const authRouter = Router();
 
 authRouter.post('/signup', validateSchema(newUserSchema), signUp);
-authRouter.post('/signin',login)
+authRouter.post('/signin', login)
+authRouter.post('/authIn', validateToken, createNewSession);
 export default authRouter;
