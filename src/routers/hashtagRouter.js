@@ -5,4 +5,4 @@ const hashtagRouter = Router();
 
 hashtagRouter.post('/hashtag', validateToken);
 
-export default postRouter;
+export default hashtagRouter;
