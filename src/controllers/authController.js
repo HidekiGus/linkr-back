@@ -3,6 +3,7 @@ import { findEmail, insertNewUser } from "../repositories/authRepository.js";
 
 export async function signUp(req, res) {
     try {
+        console.log('oi')
         const user = req.body;
         const unique = await findEmail(user.email);
         const encryptedPassword = bcrypt.hashSync(user.password, 5);
