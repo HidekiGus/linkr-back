@@ -11,10 +11,6 @@ export async function findEmail(email) {
     return await connection.query('SELECT * FROM users WHERE email = $1', [email])
 }
 
-export async function findUserByToken(token) {
-    return await connection.query(`SELECT "userId" FROM sessions WHERE token = $1`, [token]);
-}
-
 export async function generateNewSession(id, token) {
     return await connection.query(`
         UPDATE sessions
@@ -26,4 +22,8 @@ export async function generateNewSession(id, token) {
             token
         ]
     );
+}
+
+export async function findSession(token) {
+    return await connection.query('SELECT * FROM sessions WHERE token = $1', [token])
 }
