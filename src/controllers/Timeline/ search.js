@@ -14,22 +14,23 @@ export async function hashtag(req, res) {
     if(conta.length== 0 || conta.length>20){
         return res.sendStatus(500)
     }
+    console.log(conta)
     const resultado = await db.query(`SELECT * FROM
      hashtags WHERE hashtag = $1`,[conta])
-     if(resultado.rows.length ==0){
-        await db.query(`INSERT INTO hashtags(hashtag)
-        VALUES ($1)
-        `,[conta])
-     }
+    
+     
+     console.log(resultado.rows[0])
      const hashtagPosts = await db.query(`SELECT * FROM
-     hashtags_posts WHERE hashtag_id = $1`,[resultado.rows[0].id])
+     hastags_posts WHERE post_id = $1`,[resultado.rows[0].id])
+     console.log(hashtagPosts.rows)
      const hashtags =[]
      for(let i=0;hashtagPosts.rows.length>i;i++){
         const caixa = await db.query(`SELECT * FROM
         posts WHERE id = $1`,[hashtagPosts.rows[i].post_id])
         hashtags.push(caixa.rows[0])
+        
      }
-     res.status(20).send(hashtags)
+     res.status(200).send(hashtags)
     } catch (error) {
         res.status(500).send(error)
     }
