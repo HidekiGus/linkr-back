@@ -12,5 +12,11 @@ export async function findEmail(email) {
 }
 
 export async function findSession(token) {
-    return await connection.query('SELECT * FROM sessions WHERE token = $1', [token])
+    return await connection.query(`
+        SELECT users.id, users.name, users.email, users.image FROM users
+        JOIN sessions ON sessions.user_id = users.id
+        WHERE sessions.token = $1
+    `,
+        [token]
+    )
 }
