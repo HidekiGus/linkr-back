@@ -11,7 +11,7 @@ export async function validateToken(req, res, next) {
         }
 
         res.locals.token = token;
-        res.locals.user = session[0].user_id;
+        res.locals.user = session[0];
         next();
     } catch (error) {
         res.status(500).send(error);
