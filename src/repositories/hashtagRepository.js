@@ -6,3 +6,10 @@ export async function insertHashtags(hashtag) {
         [hashtag]
     )
 }
+
+export async function findHashtag(hashtag) {
+    return await connection.query(
+        'SELECT * FROM hashtags WHERE name = $1',
+        [hashtag]
+    )
+}
