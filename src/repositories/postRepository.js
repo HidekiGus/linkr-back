@@ -6,3 +6,14 @@ export async function insertPost(post) {
         [post.userId, post.link, post.description]
     )
 }
+
+export async function filterPostsByHashtag(hashtag) {
+    return connection.query(`
+        SELECT * FROM posts
+        JOIN hashtags_posts ON hashtags_posts.post_id = posts.id
+        JOIN hashtags ON hashtags.id = hashtags_posts.hashtag_id
+        WHERE hashtags.hashtag = $1
+    `,
+        [hashtag]
+    );
+}
