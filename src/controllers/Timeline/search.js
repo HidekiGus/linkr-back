@@ -44,7 +44,19 @@ export async function hashtagsTrending(req, res) {
     FROM hastags_posts hp
         JOIN hashtags h ON h.id=hp.hashtag_id
     GROUP BY h.id;`)
-     res.status(200).send(resultado.rows)
+   
+    const b=resultado.rows
+    b.sort(function(x,y){
+        return y.numero - x.numero;
+    
+        })
+        const resposta =[]
+        for(let i=0; i<10 && b.length>i;i++){
+            resposta.push(b[i])
+        }
+        console.log(resposta)
+     res.status(200).send(resposta)
+     
     } catch (error) {
         res.status(500).send(error)
     }
