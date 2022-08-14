@@ -25,6 +25,7 @@ export async function getPosts(req, res) {
         }));
         return res.status(200).send(postsWithMetadata);
     } catch(error) {
+        console.log(error)
         return res.status(500).send(error);
     }
 }

@@ -1,5 +1,4 @@
 import connection from "../dbStrategy/pg.js";
-import urlMetadata from "url-metadata";
 
 export async function getAllPosts() {
     return await connection.query(`
