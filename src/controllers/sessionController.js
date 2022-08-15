@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { /*getUserById, deletePreviousSession,*/ generateNewSession } from '../repositories/authRepository.js';
+import { generateNewSession } from '../repositories/authRepository.js';
 
 export async function createNewSession(req, res) {
     const user = res.locals.user;
