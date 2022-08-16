@@ -1,12 +1,19 @@
 import urlMetadata from "url-metadata";
 import { getAllPosts } from "../repositories/postsRepository.js";
-import { insertPost } from '../repositories/postRepository.js'
+import { findLastPost, insertHashtagPost, insertPost } from '../repositories/postRepository.js'
 
 export async function postPost(req, res) {
     try {
+        const hashtagsId = res.locals.hashtags;
         const post = req.body;
-
+    
         await insertPost(post);
+        const { rows: lastPost } = await findLastPost(post.userId);
+    
+        for(let i = 0; i < hashtagsId.length; i++) {
+            await insertHashtagPost(lastPost[0].id, hashtagsId[i])
+        }
+    
         res.status(201).send('Post realizado.');
     } catch (error) {
         res.status(500).send(error)

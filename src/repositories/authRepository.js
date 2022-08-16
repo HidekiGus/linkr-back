@@ -11,11 +11,17 @@ export async function findEmail(email) {
     return await connection.query('SELECT * FROM users WHERE email = $1', [email])
 }
 
-export async function findSession(id) {
+export async function findSession(token) {
+    return await connection.query(`
+        SELECT * FROM sessions WHERE token = $1
+    `, [token])
+}
+
+export async function findUserSession(id) {
     return await connection.query(`
         SELECT * FROM sessions
         WHERE user_id = $1
-    `,
+        `,
         [id]
     )
 }
