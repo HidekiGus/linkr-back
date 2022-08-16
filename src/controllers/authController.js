@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { v4 as uuid } from 'uuid';
-import { findEmail, findSession, generateNewSession, insertNewUser, updateSession } from "../repositories/authRepository.js";
+import { findEmail, findUserSession, generateNewSession, insertNewUser, updateSession } from "../repositories/authRepository.js";
 
 export async function signUp(req, res) {
     try {
@@ -25,7 +25,7 @@ export async function login(req, res) {
         const resultado = await findEmail(conta.email);
         const senha= resultado.rows[0] ? bcrypt.compareSync(conta.password, resultado.rows[0].password) : null;
         const token = uuid();
-        const session = await findSession(resultado.rows[0].id);
+        const session = await findUserSession(resultado.rows[0].id);
         
         if(resultado.rows.length === 0){ 
             return res.status(401).send('email ou senha incorreto')
