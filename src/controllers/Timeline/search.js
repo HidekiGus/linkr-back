@@ -3,7 +3,7 @@ export async function pesquisa(req, res) {
     const conta = req.query.nome;
    
     const pesquisar='%'+conta+'%'
-    const resultado = await db.query(`SELECT name,image FROM
+    const resultado = await db.query(`SELECT id,name,image FROM
      users WHERE name ilike $1`,[pesquisar])
     console.log(resultado.rows)
     res.status(200).send(resultado.rows)
@@ -39,7 +39,7 @@ export async function hashtag(req, res) {
 export async function hashtagsTrending(req, res) {
     try{
         const resultado = await db.query(`SELECT 
-        h.hashtag AS nome, 
+        h.id,h.hashtag AS nome, 
         COUNT(hp."id") AS "numero"
     FROM hastags_posts hp
         JOIN hashtags h ON h.id=hp.hashtag_id
@@ -61,8 +61,21 @@ export async function hashtagsTrending(req, res) {
         res.status(500).send(error)
     }
    
-} 
+}
 export async function buscarUsuario(req, res) {
+    const conta = req.params.id
+    console.log(conta)
+    try{
+        const user = await db.query(`SELECT * FROM
+     users WHERE id = $1`,[Number(conta)])
+     console.log(user.rows)
+     res.status(200).send(user.rows[0].name)
+    } catch (error) {
+        res.status(500).send(error)
+    }
+   
+}  
+export async function buscarUsuarioPost(req, res) {
     const conta = req.params.id
     console.log(conta)
     try{
