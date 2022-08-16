@@ -11,7 +11,24 @@ export async function findEmail(email) {
     return await connection.query('SELECT * FROM users WHERE email = $1', [email])
 }
 
+export async function findSession(id) {
+    return await connection.query(`
+        SELECT * FROM sessions
+        WHERE user_id = $1
+    `,
+        [id]
+    )
+}
+
 export async function generateNewSession(id, token) {
+    return await connection.query(`
+        INSERT INTO sessions(user_id, token)
+        VALUES ($1, $2)
+        `,[Number(id), token]
+    )
+}
+
+export async function updateSession(id, token) {
     return await connection.query(`
         UPDATE sessions
         SET token = $2
@@ -22,14 +39,4 @@ export async function generateNewSession(id, token) {
             token
         ]
     );
-}
-
-export async function findSession(token) {
-    return await connection.query(`
-        SELECT users.id, users.name, users.email, users.image FROM users
-        JOIN sessions ON sessions.user_id = users.id
-        WHERE sessions.token = $1
-    `,
-        [token]
-    )
 }
