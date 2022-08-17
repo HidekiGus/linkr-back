@@ -22,3 +22,13 @@ export async function insertHashtagPost(postId, hashtagId) {
         VALUES ($1, $2)
     `, [postId, hashtagId])
 }
+
+export async function getAllPosts() {
+    return await connection.query(`
+        SELECT users.name, users.image, posts.description, posts.link FROM users
+        JOIN posts
+        ON posts."user_id"=users.id
+        ORDER BY posts."created" DESC
+        LIMIT 20;`
+    );
+}

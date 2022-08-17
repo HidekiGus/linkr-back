@@ -1,6 +1,5 @@
 import urlMetadata from "url-metadata";
-import { getAllPosts } from "../repositories/postsRepository.js";
-import { findLastPost, insertHashtagPost, insertPost } from '../repositories/postRepository.js'
+import { findLastPost, getAllPosts, insertHashtagPost, insertPost } from '../repositories/postRepository.js'
 
 export async function postPost(req, res) {
     try {
