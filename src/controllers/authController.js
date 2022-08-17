@@ -39,7 +39,14 @@ export async function login(req, res) {
             await updateSession(resultado.rows[0].id, token)
         }
 
-        res.status(200).send(token)
+        res.status(200).send({
+            token: token, 
+            user: {
+                id: resultado.rows[0].id,
+                name: resultado.rows[0].name,
+                image: resultado.rows[0].image
+            }
+        })
     } catch(e){
         return res.status(420).send('voce nao existe')
     }
