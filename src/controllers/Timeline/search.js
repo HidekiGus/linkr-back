@@ -19,7 +19,6 @@ export async function hashtag(req, res) {
     const resultado = await db.query(`SELECT * FROM
      hashtags WHERE hashtag = $1`,[conta])
     
-     
      console.log(resultado.rows[0])
      const hashtagPosts = await db.query(`SELECT * FROM
      hashtags_posts WHERE post_id = $1`,[resultado.rows[0].id])

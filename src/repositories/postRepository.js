@@ -6,3 +6,29 @@ export async function insertPost(post) {
         [post.userId, post.link, post.description]
     )
 }
+
+export async function findLastPost(userId) {
+    return await connection.query(`
+        SELECT * FROM posts
+        WHERE user_id = $1
+        ORDER BY id DESC
+        LIMIT 1
+    `, [userId])
+}
+
+export async function insertHashtagPost(postId, hashtagId) {
+    return await connection.query(`
+        INSERT INTO hashtags_posts (post_id, hashtag_id)
+        VALUES ($1, $2)
+    `, [postId, hashtagId])
+}
+
+export async function getAllPosts() {
+    return await connection.query(`
+        SELECT users.name, users.image, posts.description, posts.link FROM users
+        JOIN posts
+        ON posts."user_id"=users.id
+        ORDER BY posts."created" DESC
+        LIMIT 20;`
+    );
+}
