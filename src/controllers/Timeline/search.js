@@ -22,7 +22,7 @@ export async function hashtag(req, res) {
      
      console.log(resultado.rows[0])
      const hashtagPosts = await db.query(`SELECT * FROM
-     hastags_posts WHERE post_id = $1`,[resultado.rows[0].id])
+     hashtags_posts WHERE post_id = $1`,[resultado.rows[0].id])
      console.log(hashtagPosts.rows)
      const hashtags =[]
      for(let i=0;hashtagPosts.rows.length>i;i++){
@@ -41,7 +41,7 @@ export async function hashtagsTrending(req, res) {
         const resultado = await db.query(`SELECT 
         h.id,h.hashtag AS nome, 
         COUNT(hp."id") AS "numero"
-    FROM hastags_posts hp
+    FROM hashtags_posts hp
         JOIN hashtags h ON h.id=hp.hashtag_id
     GROUP BY h.id;`)
    
@@ -96,7 +96,7 @@ export async function buscarCurtidas(req, res) {
         const resultado = await db.query(`SELECT 
         c.hashtag AS nome, 
         COUNT(hp."id") AS "numero"
-    FROM hastags_posts hp
+    FROM hashtags_posts hp
         JOIN curtidas c ON c.id=hp.hashtag_id
     GROUP BY c.id;`)
      res.status(200).send(resultado.rows)
